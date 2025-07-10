@@ -17,8 +17,8 @@ train_data = datasets.MNIST(root='./data', train=True, download=False, transform
 test_data = datasets.MNIST(root='./data', train=False, download=False, transform=transform)
 
 # mniejsza ilosc danych
-#train_data = Subset(train_data, range(500))
-#test_data = Subset(test_data, range(100))
+train_data = Subset(train_data, range(6000))
+test_data = Subset(test_data, range(1000))
 
 train_loader = DataLoader(train_data, batch_size=64, shuffle=True)
 test_loader = DataLoader(test_data, batch_size=64, shuffle=False)
@@ -42,22 +42,23 @@ class SimpleNN(nn.Module):
 
 class CNN(nn.Module):
     def __init__(self):
-        super().__init__()
-        self.conv1 = nn.Conv2d(1, 32, 3, padding=1)   # [1x28x28] → [32x28x28]
-        self.pool = nn.MaxPool2d(2, 2)                # [32x28x28] → [32x14x14]
-        self.conv2 = nn.Conv2d(32, 64, 3, padding=1)  # [32x14x14] → [64x14x14]
-        # kolejny pooling → [64x7x7]
-        self.fc1 = nn.Linear(64 * 7 * 7, 128)
-        self.fc2 = nn.Linear(128, 10)
+        super(CNN, self).__init__()
+
+        self.conv1 = nn.Conv2d(1, 10, kernel_size=5)
+        self.conv2 = nn.Conv2d(10, 20, kernel_size=5)
+        self.conv2_drop = nn.Dropout2d()
+        self.fc1 = nn.Linear(320, 50)
+        self.fc2 = nn.Linear(50, 10)
 
     def forward(self, x):
-        x = self.pool(F.relu(self.conv1(x)))  # conv1 + ReLU + maxpool
-        x = self.pool(F.relu(self.conv2(x)))  # conv2 + ReLU + maxpool
-        x = x.view(-1, 64 * 7 * 7)            # flatten
+        x = F.relu(F.max_pool2d(self.conv1(x), 2))
+        x = F.relu(F.max_pool2d(self.conv2_drop(self.conv2(x)), 2))
+        x = x.view(-1, 320)
         x = F.relu(self.fc1(x))
+        x = F.dropout(x, training=self.training)
         x = self.fc2(x)
-        return x
 
+        return x
 
 model1 = SimpleNN()
 model2 = CNN()
@@ -163,6 +164,8 @@ for epoch in range(5):
 epochs = range(1, 6)
 
 plt.figure(figsize=(12,5))
+
+plt.suptitle(f'Train: {len(train_data)}, Test:{ len(test_data)}')
 
 plt.subplot(1,2,1)
 plt.plot(epochs, train_accs1, 'b-', label='SimpleNN Train Acc')
