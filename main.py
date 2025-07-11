@@ -1,11 +1,5 @@
-from torchvision import datasets, transforms
-from torch.utils.data import DataLoader
 import torch.nn as nn
-import torch.nn.functional as F
 import torch
-from torch.utils.data import Subset
-import matplotlib.pyplot as plt
-
 from model import SimpleNN, CNN
 from data_loader import get_data
 from utils import plot_metrics
@@ -65,4 +59,5 @@ for epoch in range(5):
     print(f" CNN      -> Acc: {test_acc2:.4f}, Loss: {test_loss2:.4f} | {train_acc2}, {train_loss2}")
 
 
+# rysowanie wykresow
 plot_metrics(train_accs1, test_accs1, train_losses1, test_losses1, train_accs2, test_accs2, train_losses2, test_losses2)
