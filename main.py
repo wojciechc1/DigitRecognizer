@@ -6,17 +6,23 @@ from utils import plot_metrics
 from test import test
 from train import train
 
+# config
+learning_rate = 0.001
+train_data_size = 6000
+test_data_size = 1000
+batch_size = 64
+epochs = 5
 
 # wczytywanie danych
-train_loader, test_loader = get_data(6000, 1000, 64)
+train_loader, test_loader = get_data(train_data_size, test_data_size, batch_size)
 
 
 # tworzenie modelu
 model1 = SimpleNN()
 model2 = CNN()
 loss_fn = nn.CrossEntropyLoss()
-optimizer1 = torch.optim.Adam(model1.parameters(), lr=0.01)
-optimizer2 = torch.optim.Adam(model2.parameters(), lr=0.01)
+optimizer1 = torch.optim.Adam(model1.parameters(), lr=learning_rate)
+optimizer2 = torch.optim.Adam(model2.parameters(), lr=learning_rate)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
@@ -36,7 +42,7 @@ train_accs2, test_accs2 = [], []
 train_losses2, test_losses2 = [], []
 
 
-for epoch in range(5):
+for epoch in range(epochs):
     train_loss1, train_acc1 = train(model1, train_loader, loss_fn, optimizer1, device)
     test_loss1, test_acc1 = test(model1, test_loader, loss_fn, device)
 
