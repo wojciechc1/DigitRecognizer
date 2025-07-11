@@ -5,65 +5,77 @@ from data_loader import get_data
 from utils import plot_metrics
 from test import test
 from train import train
+import time
 
-# config
-learning_rate = 0.001
-train_data_size = 6000
-test_data_size = 1000
-batch_size = 64
-epochs = 5
+def main():
 
-# wczytywanie danych
-train_loader, test_loader = get_data(train_data_size, test_data_size, batch_size)
+    start = time.time() # mierzenie czasu dzialania programu
 
+    # config
+    learning_rate = 0.001
+    train_data_size = 6000
+    test_data_size = 1000
+    batch_size = 64
+    epochs = 5
 
-# tworzenie modelu
-model1 = SimpleNN()
-model2 = CNN()
-loss_fn = nn.CrossEntropyLoss()
-optimizer1 = torch.optim.Adam(model1.parameters(), lr=learning_rate)
-optimizer2 = torch.optim.Adam(model2.parameters(), lr=learning_rate)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # wczytywanie danych
+    train_loader, test_loader = get_data(train_data_size, test_data_size, batch_size)
 
 
-# Sprawdzanie dokładności przed uczeniem:
-test_loss, test_acc = test(model1, test_loader, loss_fn, device)
-print(f"Model1 - przed treningiem: Test accuracy = {test_acc:.4f}")
-
-test_loss, test_acc = test(model2, test_loader, loss_fn, device)
-print(f"Model2 - przed treningiem: Test accuracy = {test_acc:.4f}")
-
-
-# listy na metryki
-train_accs1, test_accs1 = [], []
-train_losses1, test_losses1 = [], []
-
-train_accs2, test_accs2 = [], []
-train_losses2, test_losses2 = [], []
+    # tworzenie modelu
+    model1 = SimpleNN()
+    model2 = CNN()
+    loss_fn = nn.CrossEntropyLoss()
+    optimizer1 = torch.optim.Adam(model1.parameters(), lr=learning_rate)
+    optimizer2 = torch.optim.Adam(model2.parameters(), lr=learning_rate)
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 
-for epoch in range(epochs):
-    train_loss1, train_acc1 = train(model1, train_loader, loss_fn, optimizer1, device)
-    test_loss1, test_acc1 = test(model1, test_loader, loss_fn, device)
+    # Sprawdzanie dokładności przed uczeniem:
+    test_loss, test_acc = test(model1, test_loader, loss_fn, device)
+    print(f"[MAIN] Model1 - przed treningiem: Test accuracy = {test_acc:.4f}")
 
-    train_loss2, train_acc2 = train(model2, train_loader, loss_fn, optimizer2, device)
-    test_loss2, test_acc2 = test(model2, test_loader, loss_fn, device)
-
-    # zapisujemy wyniki do list
-    train_accs1.append(train_acc1)
-    test_accs1.append(test_acc1)
-    train_losses1.append(train_loss1)
-    test_losses1.append(test_loss1)
-
-    train_accs2.append(train_acc2)
-    test_accs2.append(test_acc2)
-    train_losses2.append(train_loss2)
-    test_losses2.append(test_loss2)
-
-    print(f"Epoch {epoch+1}:")
-    print(f" SimpleNN -> Acc: {test_acc1:.4f}, Loss: {test_loss1:.4f} | {train_acc1}, {train_loss1}")
-    print(f" CNN      -> Acc: {test_acc2:.4f}, Loss: {test_loss2:.4f} | {train_acc2}, {train_loss2}")
+    test_loss, test_acc = test(model2, test_loader, loss_fn, device)
+    print(f"[MAIN] Model2 - przed treningiem: Test accuracy = {test_acc:.4f}")
 
 
-# rysowanie wykresow
-plot_metrics(train_accs1, test_accs1, train_losses1, test_losses1, train_accs2, test_accs2, train_losses2, test_losses2)
+    # listy na metryki
+    train_accs1, test_accs1 = [], []
+    train_losses1, test_losses1 = [], []
+
+    train_accs2, test_accs2 = [], []
+    train_losses2, test_losses2 = [], []
+
+
+    for epoch in range(epochs):
+        train_loss1, train_acc1 = train(model1, train_loader, loss_fn, optimizer1, device)
+        test_loss1, test_acc1 = test(model1, test_loader, loss_fn, device)
+
+        train_loss2, train_acc2 = train(model2, train_loader, loss_fn, optimizer2, device)
+        test_loss2, test_acc2 = test(model2, test_loader, loss_fn, device)
+
+        # zapisujemy wyniki do list
+        train_accs1.append(train_acc1)
+        test_accs1.append(test_acc1)
+        train_losses1.append(train_loss1)
+        test_losses1.append(test_loss1)
+
+        train_accs2.append(train_acc2)
+        test_accs2.append(test_acc2)
+        train_losses2.append(train_loss2)
+        test_losses2.append(test_loss2)
+
+        print(f"[MAIN] Epoch {epoch+1}:")
+        print(f" SimpleNN -> Acc: {test_acc1:.4f}, Loss: {test_loss1:.4f} | {train_acc1}, {train_loss1}")
+        print(f" CNN      -> Acc: {test_acc2:.4f}, Loss: {test_loss2:.4f} | {train_acc2}, {train_loss2}")
+
+    # rysowanie wykresow
+    plot_metrics(train_accs1, test_accs1, train_losses1, test_losses1, train_accs2, test_accs2, train_losses2, test_losses2)
+
+    end = time.time()  # mierzenie czasu dzialania programu
+
+    return end - start
+
+if __name__ == "__main__":
+    duration = main()
+    print(f"[TIME] Czas treningu: {duration:.2f} sekundy")
