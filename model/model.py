@@ -2,8 +2,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 
-# tworzenie prostej sieci
-
 class SimpleNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -35,3 +33,19 @@ class CNN(nn.Module):
         x = self.fc2(x)
 
         return x
+
+
+class BigMLP(nn.Module):
+    def __init__(self):
+        super(BigMLP, self).__init__()
+        self.net = nn.Sequential(
+            nn.Flatten(),
+            nn.Linear(28 * 28, 512),
+            nn.ReLU(),
+            nn.Linear(512, 256),
+            nn.ReLU(),
+            nn.Linear(256, 10)
+        )
+
+    def forward(self, x):
+        return self.net(x)

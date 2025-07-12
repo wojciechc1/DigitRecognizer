@@ -1,9 +1,9 @@
 import torch
 from torchvision import transforms
-from PIL import Image
+from PIL import Image, ImageOps
 
 
-def predict(model, image_path, device):
+def predict(model, image_path, device, img = None):
     model.eval()
 
     transform = transforms.Compose([
@@ -13,7 +13,12 @@ def predict(model, image_path, device):
         transforms.Normalize((0.1307,), (0.3081,))  # normalizacja jak w MNIST
     ])
 
-    image = Image.open(image_path).convert("RGB")
+    if img is None:
+        image = Image.open(image_path).convert("RGB")
+    else:
+        image = img
+        image = ImageOps.invert(image)
+
     image = transform(image).unsqueeze(0).to(device)  # [1, 1, 28, 28]
 
     with torch.no_grad():
@@ -21,4 +26,8 @@ def predict(model, image_path, device):
         prediction = torch.argmax(output, dim=1).item()
 
     return prediction
+
+if __name__ == "__main__":
+    image = Image.open('../data/test_digit.png').convert("RGB")
+    print(image)
 
