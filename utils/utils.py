@@ -30,9 +30,15 @@ def plot_metrics(train_accs1, test_accs1, train_losses1, test_losses1, train_acc
 
     plt.show()
 
-def save_model(model, filename):
-    torch.save(model.state_dict(), filename)
 
-def load_model(model, filename):
-    model.load_state_dict(torch.load(filename))
+def save_model(model, path):
+    torch.save(model.state_dict(), path)
+    print(f"Model saved to {path}")
+
+
+def load_model(model_class, path, device):
+    model = model_class().to(device)
+    model.load_state_dict(torch.load(path, map_location=device))
+    model.eval()
+    print(f"Model loaded from {path}")
     return model
