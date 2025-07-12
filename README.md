@@ -30,6 +30,8 @@ digit_recognizer/
 └── README.md
 ```
 
+---
+
 ## 🚀 How to Use
 
 ### 1. Install dependencies
@@ -50,3 +52,5 @@ This trains multiple models and shows plots comparing their accuracy and loss.
 ```bash
     python gui/app.py
 ```
+
+---
