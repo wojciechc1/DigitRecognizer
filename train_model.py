@@ -5,7 +5,6 @@ from utils.data_loader import get_data
 from utils.utils import plot_metrics, save_model
 from test.test import test
 from train.train import train
-from utils.predict import predict
 import time
 
 def main():
@@ -75,7 +74,7 @@ def main():
 
     end = time.time()  # mierzenie czasu dzialania programu
 
-    # Zapisywanie modelow
+    # Zapisywanie modelu
     save_model(model1, "saved_models/model_simple_nn.pth")
     save_model(model2, "saved_models/model_cnn.pth")
 
