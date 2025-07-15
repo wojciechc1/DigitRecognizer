@@ -13,7 +13,7 @@ def main():
 
     # config
     learning_rate = 0.001
-    train_data_size = 60000
+    train_data_size = 6000
     test_data_size = 10000
     batch_size = 64
     epochs = 3
@@ -92,9 +92,9 @@ def main():
     end = time.time()  # mierzenie czasu dzialania programu
 
     # Zapisywanie modelu
-    save_model(model1, "saved_models/model_simple_nn.pth")
-    save_model(model2, "saved_models/model_cnn.pth")
-    save_model(model3, "saved_models/model_big_mlp.pth")
+    #save_model(model1, "saved_models/model_simple_nn.pth")
+    #save_model(model2, "saved_models/model_cnn.pth")
+    #save_model(model3, "saved_models/model_big_mlp.pth")
 
     return end - start
 

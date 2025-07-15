@@ -1,5 +1,6 @@
 import torch.nn as nn
 import torch.nn.functional as F
+import torch
 
 
 class SimpleNN(nn.Module):
@@ -49,3 +50,19 @@ class BigMLP(nn.Module):
 
     def forward(self, x):
         return self.net(x)
+
+
+
+
+
+class LinearRegressionModel():
+    def __init__(self):
+        self.w = torch.randn(784) # waga - wspolczynnik - a
+        self.b = torch.randn(1) # bias - wyraz wolny - b
+
+    def forward(self, x):
+        # przekazanie funkcji
+        #y = self.w * x + self.b
+        # iloczyn skalarny xd
+        y = x @ self.w + self.b
+        return y
