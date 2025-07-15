@@ -13,12 +13,12 @@ Comes with a live GUI where you can draw digits and see real-time predictions fr
 - Automatic training & testing pipeline with accuracy/loss plots
 - Model saving & loading
 - GUI: draw a digit and get instant prediction
-- CLI-based prediction from image files
+- CLI-based prediction from image files (in process)
 
 ---
 
 
-## 🚀 Getting started (in process)
+## 🚀 Getting started (in process- refactoring)
 
 ### 1. Install dependencies 
 
