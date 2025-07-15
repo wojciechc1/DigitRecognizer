@@ -54,15 +54,26 @@ class BigMLP(nn.Module):
 
 
 
-
 class LinearRegressionModel():
     def __init__(self):
         self.w = torch.randn(784) # waga - wspolczynnik - a
         self.b = torch.randn(1) # bias - wyraz wolny - b
+
+    def relu(self, y):
+        y_relu = []
+        for val in y:
+            if val.item() < 0:
+                tmp = torch.tensor([0.0])
+                y_relu.append(tmp)
+            else:
+                y_relu.append(val.unsqueeze(0))
+        return torch.cat(y_relu)
 
     def forward(self, x):
         # przekazanie funkcji
         #y = self.w * x + self.b
         # iloczyn skalarny xd
         y = x @ self.w + self.b
-        return y
+        yr = self.relu(y)
+
+        return yr

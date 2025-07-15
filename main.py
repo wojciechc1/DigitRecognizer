@@ -19,17 +19,19 @@ train_loader, test_loader = get_data(train_data_size, test_data_size, batch_size
 train_accs1, test_accs1 = [], []
 train_losses1, test_losses1 = [], []
 
+
 model = LinearRegressionModel()
 
 for epoch in range(epochs):
     train_loss1, train_acc1 = train_manual(model, train_loader)
     test_loss1, test_acc1 = test_manual(model, test_loader)
 
+
     train_accs1.append(train_acc1)
     test_accs1.append(test_acc1)
     train_losses1.append(train_loss1)
     test_losses1.append(test_loss1)
-
+    print('Epoch: {:04d}'.format(epoch + 1), flush=True)
 
 
 
@@ -59,5 +61,4 @@ plt.legend()
 
 plt.tight_layout()
 plt.show()
-
 
