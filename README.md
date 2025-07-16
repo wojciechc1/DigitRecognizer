@@ -21,15 +21,12 @@ Achieved ~85% training accuracy and ~88% test accuracy early in training using a
     # install dependencies
     pip install -r requirements.txt
 
-    # train neural net
+    # train CNN and SimpleNN 
     python train_model.py
 
-    # train manual regression
-    python train_manual.py
+    # GUI - draw and predict
+    python predict_image.py
 
-    # test neural net
-    python test/test_nn.py
-
-    # launch GUI
+    # test and train nn created from scratch
     python gui/manual_nn_test_train.py
 ```
