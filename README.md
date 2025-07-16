@@ -31,5 +31,5 @@ Achieved ~85% training accuracy and ~88% test accuracy early in training using a
     python test/test_nn.py
 
     # launch GUI
-    python gui/main.py
+    python gui/manual_nn_test_train.py
 ```
