@@ -6,11 +6,11 @@ from utils.utils import plot_metrics, save_model
 
 
 # config
-learning_rate = 0.001
+learning_rate = 0.01
 train_data_size = 60000
 test_data_size = 10000
 batch_size = 64
-epochs = 5
+epochs = 3
 
 # wczytywanie danych
 train_loader, test_loader = get_data(train_data_size, test_data_size, batch_size)
@@ -23,7 +23,7 @@ train_losses1, test_losses1 = [], []
 model = LinearRegressionModel()
 
 for epoch in range(epochs):
-    train_loss1, train_acc1 = train_manual(model, train_loader)
+    train_loss1, train_acc1 = train_manual(model, train_loader, learning_rate)
     test_loss1, test_acc1 = test_manual(model, test_loader)
 
 

@@ -59,21 +59,31 @@ class LinearRegressionModel():
         self.w = torch.randn(784) # waga - wspolczynnik - a
         self.b = torch.randn(1) # bias - wyraz wolny - b
 
+        self.w1 = torch.randn(784, 64) * 0.01
+        self.b1 = torch.randn(64) * 0.01
+        self.w2 = torch.randn(64, 10) * 0.01
+        self.b2 = torch.randn(10) * 0.01
+
     def relu(self, y):
-        y_relu = []
-        for val in y:
-            if val.item() < 0:
-                tmp = torch.tensor([0.0])
-                y_relu.append(tmp)
-            else:
-                y_relu.append(val.unsqueeze(0))
-        return torch.cat(y_relu)
+        y_relu = torch.zeros_like(y)  # nowy tensor o takich samych wymiarach jak y
+        for i in range(y.size(0)):
+            for j in range(y.size(1)):
+                val = y[i, j]
+                if val > 0:
+                    y_relu[i, j] = val
+        return y_relu
+
 
     def forward(self, x):
         # przekazanie funkcji
         #y = self.w * x + self.b
         # iloczyn skalarny xd
-        y = x @ self.w + self.b
-        yr = self.relu(y)
+        #y = x @ self.w + self.b
+        #yr = self.relu(y)
 
-        return yr
+        y1 = x @ self.w1 + self.b1
+        r_y1 = self.relu(y1)
+        y2 = r_y1 @ self.w2 + self.b2
+
+        #print(y2.shape)
+        return y2, y1, r_y1
