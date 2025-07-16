@@ -13,7 +13,7 @@ Achieved ~85% training accuracy and ~88% test accuracy early in training using a
 ---
 
 
-## 🚀 Getting started (in process- refactoring)
+## 🚀 Getting started
 
 ### 1. Install dependencies 
 
