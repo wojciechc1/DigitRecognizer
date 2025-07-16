@@ -1,19 +1,14 @@
 # Digit Recognizer – Compare Models & Predict by Drawing
-## (Manual Linear Regression + Neural Nets + GUI)
-
-A simple but flexible playground for testing different machine learning models on the MNIST digit recognition task — including a handwritten Linear Regression from scratch (no PyTorch autograd), feedforward neural networks, and CNNs.
-
-Comes with a live GUI where you can draw digits and see real-time predictions from trained models.
----
+A simple playground for experimenting with different machine learning models on the MNIST digit recognition task.
+Achieved ~85% training accuracy and ~88% test accuracy early in training using a 2-layer neural network implemented from scratch.
 
 ## 🔍 Features
 
-- Manual linear regression from scratch (no libraries, just math!)
+- Manual 2-layer neural network built from scratch
 - Comparison of multiple models (SimpleNN, CNN)
 - Automatic training & testing pipeline with accuracy/loss plots
 - Model saving & loading
 - GUI: draw a digit and get instant prediction
-- CLI-based prediction from image files (in process)
 
 ---
 
