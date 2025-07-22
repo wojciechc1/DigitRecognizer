@@ -28,5 +28,5 @@ Achieved ~85% training accuracy and ~88% test accuracy early in training using a
     python predict_image.py
 
     # test and train nn created from scratch
-    python gui/manual_nn_test_train.py
+    python manual_nn_test_train.py
 ```
